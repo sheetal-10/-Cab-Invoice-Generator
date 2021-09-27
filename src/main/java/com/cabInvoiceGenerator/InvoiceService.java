@@ -4,6 +4,11 @@ public class InvoiceService {
     private static final double MINIMUM_COST_PER_KM = 10;
     private static final int COST_PER_TIME = 1;
     private static final double MINIMUM_FARE = 5.0;
+    private RideRepository rideRepository;
+
+    public InvoiceService() {
+        this.rideRepository = new RideRepository();
+    }
 
     public double calculateFare(double distance, int time) {
         double totalFare = distance * MINIMUM_COST_PER_KM + time * COST_PER_TIME;
@@ -19,10 +24,10 @@ public class InvoiceService {
     }
 
     public void addRides(String userId, Ride[] rides) {
-        return;
+        rideRepository.addRides(userId, rides);
     }
 
     public InvoiceSummary getInvoiceSummary(String userId) {
-        return null;
+        return this.calculateFare(rideRepository.getRides(userId));
     }
 }
